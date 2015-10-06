@@ -12,7 +12,7 @@ public class AddToMedianFromMostWeight implements Strategy {
 	public String name = "AddToMedianFromMostWeight";
 
 	Movement bestMove = null;
-	int depth = 2;
+	int depth = 5;
 	List<Movement> addHistory = new ArrayList<Movement>();
 	int leftCount = 0;
 	int rightCount = 0;
@@ -90,7 +90,11 @@ public class AddToMedianFromMostWeight implements Strategy {
 		
 		List<Integer> list = board.getAllPossibleRemove(playerIdx);
 		if(list.size() > 0){
-			int posi = list.get(list.size()/2);
+			//int posi = list.get(list.size()/2);
+			// remove from the block far away from board center
+			int posi = 0;
+			if(list.get(0) < -2){ posi = list.get(0); }
+			else{ posi = list.get(list.size()-1); }
 			return  Movement.getRemoveMove(playerIdx, posi, board.getWeightAt(posi));			
 		}else{
 			return getRandomRemove(board, playerIdx);
